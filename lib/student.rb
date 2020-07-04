@@ -52,6 +52,16 @@ class Student
     new_student
   end
 
+  def self.find_by_name(name)
+    sql = <<-SWL
+    SELECT *
+    FROM students 
+    WHERE name = ?
+    SQL 
+
+    DB[:conn].execute(sql, name).map{ |row| student.new_from_db(row) }.first
+  end
+
   # Remember, you can access your database connection anywhere in this class
   #  with DB[:conn]
 
